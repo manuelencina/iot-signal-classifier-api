@@ -6,7 +6,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset
 
-def train_autoencoder(X_trn, dae_config):
+def train_autoencoder(X_trn: torch.Tensor, dae_config: dict) -> list:
     batch_size              = dae_config["batch_size"]
     num_epochs_autoencoder  = 30
     learning_rate           = dae_config["alpha"]
@@ -45,7 +45,7 @@ def train_autoencoder(X_trn, dae_config):
 
     return A, encoder_weights
 
-def train_softmax(A, Y_trn, dae_config):
+def train_softmax(A: torch.Tensor, Y_trn: torch.Tensor, dae_config: dict) -> torch.Tensor:
     batch_size          = dae_config["batch_size"]
     num_epochs_softmax  = 50
     learning_rate       = dae_config["alpha"]

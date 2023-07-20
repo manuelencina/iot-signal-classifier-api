@@ -2,13 +2,13 @@ import torch.nn as nn
 
 
 class Autoencoder(nn.Module):
-    def __init__(self, input_size, hidden_sizes):
+    def __init__(self, input_size: int, hidden_sizes: int):
         super(Autoencoder, self).__init__()
         self.encoder = self._get_encoder(input_size, hidden_sizes)
         self.decoder = self._get_decoder(input_size, hidden_sizes)
 
 
-    def _get_encoder(self, input_size, hidden_sizes):
+    def _get_encoder(self, input_size: int, hidden_sizes: int):
         encoder_layers = []
         for i in range(len(hidden_sizes)):
             if i == 0:
@@ -19,7 +19,7 @@ class Autoencoder(nn.Module):
             encoder_layers.append(nn.ReLU())
         return nn.Sequential(*encoder_layers)
     
-    def _get_decoder(self, input_size, hidden_sizes):
+    def _get_decoder(self, input_size: int, hidden_sizes: int):
         decoder_sizes = hidden_sizes[::-1]
         decoder_layers = []
         for i in range(len(decoder_sizes)-1):

@@ -6,31 +6,31 @@ import seaborn as sns
 import os
 
 
-def to_cuda(tensor):
+def to_cuda(tensor: torch.Tensor) -> torch.Tensor: 
     return tensor.cuda() if torch.cuda.is_available() else tensor
 
-def create_results_folder(i):
-    if not os.path.exists(f"results/test{i+1}"):
-        os.makedirs(f"results/test{i+1}")
+def create_results_folder(idx: int) -> None:
+    if not os.path.exists(f"results/test{idx+1}"):
+        os.makedirs(f"results/test{idx+1}")
 
-def save_weights(encoder_weights, softmax_weights, i):
-    file_path = f"results/test{i+1}/weights_test.pth"
+def save_weights(encoder_weights: list, softmax_weights: torch.Tensor, idx: int):  
+    file_path = f"results/test{idx+1}/weights_test.pth"
     weights_dict = {
         "encoder_weights": encoder_weights,
         "softmax_weights": softmax_weights
     }
     torch.save(weights_dict, file_path)
 
-def save_plot(confusion_mat, i):
+def save_plot(cm: np.ndarray, idx: int) -> None: 
     plt.figure(figsize=(8, 6))
-    sns.heatmap(confusion_mat, annot=True, fmt="d", cmap="Blues")
+    sns.heatmap(cm, annot=True, fmt="d", cmap="Blues")
     plt.xlabel("Predicted Labels")
     plt.ylabel("True Labels")
     plt.title("Confusion Matrix")
-    plt.savefig(f"results/test{i+1}/confusion_matrix.png")
+    plt.savefig(f"results/test{idx+1}/confusion_matrix.png")
 
-def save_report(report, i):
-    with open(f"results/test{i+1}/classification_report.txt", "w") as file:
+def save_report(report: str, idx: int):
+    with open(f"results/test{idx+1}/classification_report.txt", "w") as file:
         file.write(report)
 
 def load_dae_config(file_path: str) -> dict:
@@ -65,9 +65,9 @@ def load_raw_data(file_name: str, n_classes: int)-> dict:
 
 
 def save_data(features: list, p_training: float) -> None:
-    file = "data/processed_data"
+    file  = "data/processed_data"
     X, Y  = features[0], features[1]
-    p = 1-p_training
+    p     = 1 - p_training
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=p)
     np.savetxt(f"{file}/X_train.csv", X_train, delimiter=",", fmt="%.4f")
     np.savetxt(f"{file}/X_test.csv", X_test, delimiter=",", fmt="%.4f")
@@ -75,11 +75,11 @@ def save_data(features: list, p_training: float) -> None:
     np.savetxt(f"{file}/Y_test.csv", Y_test, delimiter=",", fmt="%.4f")
 
 def load_data_trn():
-  x_train=np.loadtxt(open("data/processed_data/X_train.csv", "rb"), delimiter=",")
-  y_train=np.loadtxt(open("data/processed_data/Y_train.csv", "rb"), delimiter=",")
+  x_train = np.loadtxt(open("data/processed_data/X_train.csv", "rb"), delimiter=",")
+  y_train = np.loadtxt(open("data/processed_data/Y_train.csv", "rb"), delimiter=",")
   return x_train, y_train
 
 def load_data_tst():
-  x_train=np.loadtxt(open("data/processed_data/X_test.csv", "rb"), delimiter=",")
-  y_train=np.loadtxt(open("data/processed_data/Y_test.csv", "rb"), delimiter=",")
+  x_train = np.loadtxt(open("data/processed_data/X_test.csv", "rb"), delimiter=",")
+  y_train = np.loadtxt(open("data/processed_data/Y_test.csv", "rb"), delimiter=",")
   return x_train, y_train
