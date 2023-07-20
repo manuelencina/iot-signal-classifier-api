@@ -4,6 +4,18 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
+import argparse
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(description="Run the main script.")
+    parser.add_argument(
+        "-i",
+        "--index",
+        type=int,
+        default=5,
+        help="Index value for the loop (default is 5)."
+    )
+    return parser.parse_args()
 
 
 def to_cuda(tensor: torch.Tensor) -> torch.Tensor: 

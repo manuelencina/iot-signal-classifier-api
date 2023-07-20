@@ -7,7 +7,8 @@ from utils.utility import (
     save_weights,
     save_plot,
     save_report,
-    create_results_folder
+    create_results_folder,
+    parse_arguments
 )
 from utils.train import train_autoencoder, train_softmax
 from utils.test import load_model_weights, predict_softmax, evaluate_predictions
@@ -15,8 +16,8 @@ from utils.test import load_model_weights, predict_softmax, evaluate_predictions
 import torch
 
 
-def main():
-    for idx in range(5):
+def main(index):
+    for idx in range(index):
         create_results_folder(idx)
         dae_config          = load_dae_config("config/cnf_dae.csv")
         X_trn, Y_trn        = load_data_trn()
@@ -38,5 +39,6 @@ def main():
         save_report(report, idx)
 
 if __name__ == "__main__":
+    args = parse_arguments()
     create_features()
-    main()
+    main(args.index)
