@@ -6,6 +6,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset
 
+
 def train_autoencoder(X_trn: torch.Tensor, dae_config: dict) -> list:
     batch_size              = dae_config["batch_size"]
     num_epochs_autoencoder  = 30

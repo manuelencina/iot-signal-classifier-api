@@ -14,6 +14,7 @@ from utils.test import load_model_weights, predict_softmax, evaluate_predictions
 
 import torch
 
+
 def main():
     for idx in range(5):
         create_results_folder(idx)
